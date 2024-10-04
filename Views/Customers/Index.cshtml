@@ -1,0 +1,62 @@
+﻿@model IEnumerable<HomeWork3Customers.Models.Customer>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Our customers:</h1>
+<form method="get" asp-action="Index">
+    <div class="input-group mb-3">
+        <input type="text" name="searchString" class="form-control" placeholder="Search customers..." aria-label="Search customers..." />
+        <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+</form>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any()) // Перевірка, чи Model порожня
+        {
+            <tr>
+                <td colspan="4" class="text-center">No results to display</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
